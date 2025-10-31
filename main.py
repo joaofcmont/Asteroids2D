@@ -7,10 +7,19 @@ from asteroidfield import AsteroidField
 from shot import Shot
 
 
+def draw_health_bar(screen, x, y, health, max_health):
+        BAR_WIDTH = 200
+        BAR_HEIGHT = 20
+        fill = (health / max_health) * BAR_WIDTH
+        pygame.draw.rect(screen, (255, 0, 0), (x, y, BAR_WIDTH, BAR_HEIGHT))
+        pygame.draw.rect(screen, (0, 255, 0), (x, y, fill, BAR_HEIGHT))
+        pygame.draw.rect(screen, (255, 255, 255), (x, y, BAR_WIDTH, BAR_HEIGHT), 2)
+
+
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    font = pygame.font.SysFont('Impact', 40)
     clock = pygame.time.Clock()
 
     updatable = pygame.sprite.Group()
@@ -53,13 +62,10 @@ def main():
                     asteroid.split()
 
         screen.fill("black")
+        draw_health_bar(screen, 10, 10, player.health, PLAYER_HEALTH)
 
         for obj in drawable:
-            obj.draw(screen)
-        
-        #Draw player health every frame
-        health_text = font.render(f"Health: {player.health}", True, (255, 0, 0))
-        screen.blit(health_text, (10, 10))
+            obj.draw(screen)       
 
         pygame.display.flip()
 

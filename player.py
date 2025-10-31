@@ -63,3 +63,4 @@ class Player(CircleShape):
         shot.velocity = forward * PLAYER_SHOOT_SPEED
         for container in Shot.containers:
             container.add(shot)
+
