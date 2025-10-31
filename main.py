@@ -10,7 +10,7 @@ from shot import Shot
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    font = pygame.font.SysFont(None, 36)
+    font = pygame.font.SysFont('Impact', 40)
     clock = pygame.time.Clock()
 
     updatable = pygame.sprite.Group()
