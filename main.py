@@ -20,6 +20,8 @@ def draw_health_bar(screen, x, y, health, max_health):
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    background = pygame.image.load("assets/demo02_PixelSky_1920x1080.png").convert()
+    background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
 
     updatable = pygame.sprite.Group()
@@ -61,7 +63,7 @@ def main():
                     shot.kill()
                     asteroid.split()
 
-        screen.fill("black")
+        screen.blit(background, (0, 0))
         draw_health_bar(screen, 10, 10, player.health, PLAYER_HEALTH)
 
         for obj in drawable:
