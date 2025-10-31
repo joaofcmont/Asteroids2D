@@ -4,12 +4,15 @@ from constants import *
 from shot import Shot
 
 class Player(CircleShape):
-    def __init__(self,x,y,health=PLAYER_HEALTH):
-        super().__init__(x,y,PLAYER_RADIUS)
+    def __init__(self, x, y, health=PLAYER_HEALTH):
+        super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
         self.health = health
         self.damage_cooldown = 0
+        self.image = pygame.image.load("assets/Main Ship - Base - Full health.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (PLAYER_RADIUS*2, PLAYER_RADIUS*2))
+
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -19,8 +22,13 @@ class Player(CircleShape):
         c = self.position - forward * self.radius + right
         return [a, b, c]
 
-    def draw(self,screen):
-        pygame.draw.polygon(screen,"white",self.triangle(),2)
+    def draw(self, screen):
+        # No rotation offset needed if image faces down by default
+        rotated_image = pygame.transform.rotate(self.image, self.rotation)
+        rect = rotated_image.get_rect(center=(self.position.x, self.position.y))
+        screen.blit(rotated_image, rect.topleft)
+
+
 
     def rotate(self,dt):
         self.rotation += PLAYER_TURN_SPEED * dt 
