@@ -10,6 +10,7 @@ from shot import Shot
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    font = pygame.font.SysFont(None, 36)
     clock = pygame.time.Clock()
 
     updatable = pygame.sprite.Group()
@@ -37,8 +38,14 @@ def main():
 
         for asteroid in asteroids:
             if asteroid.collides_with(player):
-                print("Game over!")
-                sys.exit()
+                asteroid.split()
+                if player.damage_cooldown <= 0 and not player.is_dead():
+                    player.take_damage()
+                    player.damage_cooldown = 1.0  # 1 second of invulnerability
+                    if player.is_dead():
+                        print("Game over!")
+                        sys.exit()
+
 
             for shot in shots:
                 if asteroid.collides_with(shot):
@@ -49,6 +56,10 @@ def main():
 
         for obj in drawable:
             obj.draw(screen)
+        
+        #Draw player health every frame
+        health_text = font.render(f"Health: {player.health}", True, (255, 0, 0))
+        screen.blit(health_text, (10, 10))
 
         pygame.display.flip()
 

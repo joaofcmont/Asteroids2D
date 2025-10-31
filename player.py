@@ -4,10 +4,12 @@ from constants import *
 from shot import Shot
 
 class Player(CircleShape):
-    def __init__(self,x,y):
+    def __init__(self,x,y,health=PLAYER_HEALTH):
         super().__init__(x,y,PLAYER_RADIUS)
         self.rotation = 0
         self.shoot_timer = 0
+        self.health = health
+        self.damage_cooldown = 0
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -25,6 +27,8 @@ class Player(CircleShape):
 
     def update(self, dt):
         self.shoot_timer -= dt
+        if self.damage_cooldown > 0:
+            self.damage_cooldown -= dt
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -42,6 +46,14 @@ class Player(CircleShape):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * PLAYER_SPEED * dt
     
+    def take_damage(self, amount=1):
+        self.health -= amount
+        if self.health < 0:
+            self.health = 0
+
+    def is_dead(self):
+        return self.health <= 0
+
     def shoot(self):
         if self.shoot_timer > 0:
             return
@@ -49,3 +61,5 @@ class Player(CircleShape):
         shot = Shot(self.position.x, self.position.y)
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         shot.velocity = forward * PLAYER_SHOOT_SPEED
+        for container in Shot.containers:
+            container.add(shot)
