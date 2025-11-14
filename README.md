@@ -40,6 +40,7 @@ Here’s what’s coming next! ✨
 - [ ] Multiple lives and respawning ❤️  
 - [ ] Explosion effects for asteroids 💥  
 - [ ] Screen wrapping for objects 🌌  
+- [X] Health Bar for the ship 
 
 ### Player & Controls
 - [ ] Add acceleration to player movement ⚙️  
