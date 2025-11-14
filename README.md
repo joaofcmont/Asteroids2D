@@ -3,7 +3,10 @@
 Asteroids2D is a fun 2D space shooter where you must survive waves of massive asteroids hurtling toward you. 🚀💥
 
 
-https://github.com/user-attachments/assets/a40b8b16-1378-49fb-9f35-a7e976dcf4a2
+
+
+https://github.com/user-attachments/assets/fee2a90c-bfea-4a42-88d2-7f83b36b8a4e
+
 
 
 
